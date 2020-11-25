@@ -17,7 +17,7 @@ fi
 echo "tractoflow results folder: ${t}"
 echo "Output folder: ${o}"
 
-echo "Building tree..."
+echo "Building tree for the following folders:"
 cd ${t}
 for i in *[!Mean_FRF]; do
     echo $i
