@@ -21,15 +21,16 @@ echo "Converting *.fib for the following folders:"
 cd ${s}
 for d in *;	 
 do    
-    echo $s
-    cd $d
-    for i in F__Surface_Enhanced_Tractography/*fib;
+    echo ${s}/${d}
+    cd $d/F__Surface_Enhanced_Tractography/
+    for i in *fib;
     do
-	scil_convert_tractogram.py $i ${o}/${i/.fib/.trk} --reference A__Convert_Label_Volume/*__labels.nii.gz
+	mkdir -p ${o}/$d
+	scil_convert_tractogram.py $i ${o}/${d}/${i/.fib/.trk} --reference ../A__Convert_Label_Volume/*__labels.nii.gz
     done
-    scil_streamlines_math.py concatenate ${o}/*trk ${o}/set_merged_final.trk  -f
-    rm -rf ${o}/${i/.fib/.trk}
-    cd ../
+    scil_streamlines_math.py concatenate ${o}/${d}/*trk ${o}/${d}/set_merged_final.trk  -f
+    rm -rf ${o}/${d}/${i/.fib/.trk}
+    cd ../../
 done
 
 echo "Done"
