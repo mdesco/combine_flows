@@ -27,12 +27,27 @@ do
     do
 	mkdir -p ${o}/$d
 	scil_convert_tractogram.py $i ${o}/${d}/${i/.fib/.trk} --reference ../A__Convert_Label_Volume/*__labels.nii.gz
+	scil_remove_invalid_streamlines.py ${o}/${d}/${i/.fib/.trk} ${o}/${d}/${i/.fib/_ic.trk} \
+					   --remove_single_point \
+					   --remove_overlapping_points \
+					   --reference ../A__Convert_Label_Volume/*__labels.nii.gz -f
     done
-    scil_streamlines_math.py concatenate ${o}/${d}/*trk ${o}/${d}/set_merged_final.trk  -f
-    rm -rf ${o}/${d}/${i/.fib/.trk}
+    scil_streamlines_math.py concatenate ${o}/${d}/*_ic.trk ${o}/${d}/set_merged_ic.trk  -f
+    rm -rf ${o}/${d}/${i/.fib/.trk} ${o}/${d}/${i/.fib/_ic.trk}
+    scil_detect_streamlines_loops.py ${o}/${d}/set_merged_ic.trk \
+				     ${o}/${d}/set_merged_ic_noloop.trk  -a 330  \
+				     --reference ../A__Convert_Label_Volume/*__labels.nii.gz -f
+
+    ln -s set_merged_ic_noloop.nii.gz set_final_tracks.trk
+
+    # cleanup 
+    rm -rf ${o}/${d}/${i/.fib/.trk} ${o}/${d}/*_ic.trk
+
     cd ../../
 done
 
 echo "Done"
+
+
 
 
