@@ -19,12 +19,19 @@ echo "Output folder: ${o}"
 
 echo "Converting *.fib for the following folders:"
 cd ${s}
-for i in */F__Surface_Enhanced_Tractography/*fib;
-do
+for d in *;	 
+do    
     echo $s
-    scil_convert_tractogram.py $i ${o}/${i/.fib/.trk} --reference A__Convert_Label_Volume/*__labels.nii.gz
+    cd $d
+    for i in F__Surface_Enhanced_Tractography/*fib;
+    do
+	scil_convert_tractogram.py $i ${o}/${i/.fib/.trk} --reference A__Convert_Label_Volume/*__labels.nii.gz
+    done
+    scil_streamlines_math.py concatenate ${o}/*trk ${o}/set_merged_final.trk  -f
+    rm -rf ${o}/${i/.fib/.trk}
+    cd ../
 done
-scil_streamlines_math.py concatenate ${o}/*trk ${o}/set_merged_final.trk  -f
-rm -rf ${o}/${i/.fib/.trk}
+
 echo "Done"
+
 
