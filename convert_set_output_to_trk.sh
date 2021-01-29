@@ -31,7 +31,7 @@ do
 					   --remove_single_point \
 					   --remove_overlapping_points \
 					   --reference ../A__Convert_Label_Volume/*__labels.nii.gz -f
-	scil_detect_streamlines_loops.py ${o}/${d}/${i/.fib/_ic.trk} \
+	scil_detect_streamlines_loops.py ${o}/${d}/${i/.fib/_ic.trxk} \
 					 ${o}/${d}/${i/.fib/_ic_noloop.trk} -a 330  \
 					 --reference ../A__Convert_Label_Volume/*__labels.nii.gz -f
 
@@ -46,6 +46,8 @@ do
 done
 
 echo "Done"
+
+
 
 
 
