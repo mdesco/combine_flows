@@ -31,7 +31,7 @@ do
 					   --remove_single_point \
 					   --remove_overlapping_points \
 					   --reference ../A__Convert_Label_Volume/*__labels.nii.gz -f
-	scil_detect_streamlines_loops.py ${o}/${d}/${i/.fib/_ic.trxk} \
+	scil_detect_streamlines_loops.py ${o}/${d}/${i/.fib/_ic.trx} \
 					 ${o}/${d}/${i/.fib/_ic_noloop.trk} -a 330  \
 					 --reference ../A__Convert_Label_Volume/*__labels.nii.gz -f
 
@@ -39,8 +39,10 @@ do
     scil_streamlines_math.py concatenate ${o}/${d}/*_ic_noloop.trk ${o}/${d}/set_merged_ic_noloop.trk  -f
     ln -s set_merged_ic_noloop.nii.gz set_final_tracks.trk
 
+    # if exist le fichier
+
     # cleanup 
-    rm -rf ${o}/${d}/${i/.fib/}*.trk 
+    #rm -rf ${o}/${d}/${i/.fib/}*.trk 
 
     cd ../../
 done
