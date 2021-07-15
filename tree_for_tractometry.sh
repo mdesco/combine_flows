@@ -22,7 +22,7 @@ echo "Output folder: ${o}"
 
 echo "Building tree for the following folders:"
 cd ${r}
-for i in *;
+for i in *[!{Average_Bundles}];
 do
     echo $i
     mkdir -p $o/$i/bundles
